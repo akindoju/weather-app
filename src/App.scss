@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Rampart+One&family=Righteous&display=swap");
+
 *,
 *::before,
 *::after {
@@ -38,30 +40,15 @@ html {
       rgba(#c6d8ff, 0.9)
     ),
     url("https://images.unsplash.com/photo-1505533542167-8c89838bb19e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80");
-  //   	background-image: linear-gradient(
-  // to bottom,
-  // rgba(black, 0.7),
-  // rgba(black, 0.7)
-  // ),
-  // url("https://images.unsplash.com/photo-1558030006-450675393462?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80")
-  // background-image: linear-gradient(to bottom, #93b2f7, #c6d8ff);
   height: 100vh;
   background-size: cover;
+
   // -webkit-filter: blur(5px);
   // -moz-filter: blur(5px);
   // -o-filter: blur(5px);
   // -ms-filter: blur(5px);
   // filter: blur(5px);
 }
-
-// .app {
-//   position: fixed;
-//   left: 0;
-//   right: 0;
-//   z-index: 0;
-//   margin-left: 20px;
-//   margin-right: 20px;
-// }
 
 .mainContainer {
   position: absolute;
@@ -72,4 +59,29 @@ html {
   height: 45rem;
   width: 80rem;
   box-shadow: 0 3rem 6rem rgba(black, 0.5);
+  display: flex;
+  justify-content: space-between;
+
+  &__left {
+    height: 100%;
+    flex: 0 0 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &--location {
+      font-family: "Righteous", cursive;
+      color: rgba(white, 0.7);
+      -webkit-text-stroke: 1px black;
+      // -webkit-text-fill-color: white;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    &--date {
+      font-family: "Rampart One", cursive;
+      font-size: 1.5rem;
+    }
+  }
 }
