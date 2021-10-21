@@ -74,14 +74,39 @@ html {
     width: 100%;
     padding: 5rem;
 
-    &--timestamp {
+    &--search {
+      input {
+        width: 30rem;
+        height: 2rem;
+        padding: 1.8rem;
+        background: rgba(white, 0.3);
+        border: 1px solid rgb(209, 209, 209);
+        border-radius: 0.5rem;
+        outline: none;
+        transition: all 0.2s;
+        color: white;
+        font-family: "Sora", sans-serif;
+
+        &::placeholder {
+          color: rgb(209, 209, 209);
+          font-family: "Sora", sans-serif;
+        }
+
+        &:focus {
+          background: rgba(white, 0.4);
+          border: 1px solid white;
+        }
+      }
+    }
+
+    &--details {
       display: flex;
       flex-direction: column;
       align-items: center;
 
       &-time {
         color: white;
-        font-size: 4rem;
+        font-size: 3rem;
         font-family: "Sora", sans-serif;
         margin-bottom: 1rem;
       }
@@ -91,12 +116,12 @@ html {
         font-size: 1.5rem;
         font-family: "Sora", sans-serif;
       }
-    }
 
-    &--location {
-      color: white;
-      font-size: 4rem;
-      font-family: "Sora", sans-serif;
+      &-location {
+        color: white;
+        font-size: 4rem;
+        font-family: "Sora", sans-serif;
+      }
     }
   }
 
@@ -114,7 +139,7 @@ html {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border-right: 1px solid red;
+      border-right: 1px solid white;
       height: 9rem;
     }
 

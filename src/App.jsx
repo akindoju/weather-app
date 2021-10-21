@@ -59,20 +59,30 @@ const App = () => {
     <div className="app">
       <div className="mainContainer">
         <div className="mainContainer__top">
-          <div className="mainContainer__top--timestamp">
-            <div className="mainContainer__top--timestamp-time">
+          <div className="mainContainer__top--search">
+            <input
+              type="text"
+              placeholder="Enter location"
+              value={searchValue}
+              onChange={({ target }) => {
+                setSearchValue(target.value);
+              }}
+            />
+          </div>
+
+          <div className="mainContainer__top--details">
+            <h1 className="mainContainer__top--details-location">Abuja</h1>
+            <h2 className="mainContainer__top--details-time">
               {new Date().getHours() > 12
                 ? new Date().getHours() - 12
                 : new Date().getHours()}
               :{new Date().getMinutes()}
               {new Date().getHours() > 12 ? "pm" : "am"}
-            </div>
-            <div className="mainContainer__top--timestamp-date">
+            </h2>
+            <h3 className="mainContainer__top--details-date">
               {dateBuilder(new Date())}
-            </div>
+            </h3>
           </div>
-
-          <div className="mainContainer__top--location">Abuja</div>
         </div>
 
         <div className="mainContainer__btm">
