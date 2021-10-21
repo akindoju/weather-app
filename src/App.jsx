@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import "./App.scss";
 
@@ -50,21 +49,25 @@ const App = () => {
   };
 
   const findWeather = async () => {
-    try {
-      const { data } = await axios.get(
-        `${api.base}weather?q=${searchValue}&units=metric&APPID=${api.key}`
-      );
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    fetch(`${api.base}weather?q=${searchValue}&units=metric&APPID=${api.key}`)
+      .then((data) => data.json())
+      .then((res) => {
+        setLocation(res.name);
+        setTemp(res.main.temp.toFixed());
+        setWeather(res.weather[0].main);
+        setHumidity(res.main.humidity);
+        setLongitude(res.coord.lon.toFixed(2));
+        setLatitude(res.coord.lat.toFixed(2));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
     fetch(`${api.base}weather?q=abuja&units=metric&APPID=${api.key}`)
       .then((data) => data.json())
       .then((res) => {
-        console.log(res);
         setLocation(res.name);
         setTemp(res.main.temp.toFixed());
         setWeather(res.weather[0].main);
@@ -81,7 +84,13 @@ const App = () => {
     <div className="app">
       <div className="mainContainer">
         <div className="mainContainer__top">
-          <div className="mainContainer__top--search">
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              findWeather();
+            }}
+            className="mainContainer__top--search"
+          >
             <input
               type="text"
               placeholder="Enter location"
@@ -104,7 +113,7 @@ const App = () => {
                 <path d="M31.008 27.231l-7.58-6.447c-0.784-0.705-1.622-1.029-2.299-0.998 1.789-2.096 2.87-4.815 2.87-7.787 0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c2.972 0 5.691-1.081 7.787-2.87-0.031 0.677 0.293 1.515 0.998 2.299l6.447 7.58c1.104 1.226 2.907 1.33 4.007 0.23s0.997-2.903-0.23-4.007zM12 20c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"></path>
               </svg>
             </div>
-          </div>
+          </form>
 
           <div className="mainContainer__top--details">
             <h1 className="mainContainer__top--details-location">{location}</h1>
