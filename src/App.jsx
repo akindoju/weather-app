@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.scss";
+import Spinner from "./Spinner";
 
 const api = {
   key: "1c886d44081cc6dffdf01ed1c0dfb7e4",
@@ -15,6 +16,7 @@ const App = () => {
   const [humidity, setHumidity] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
+  const [isFetchingWeather, setIsFetchingWeather] = useState(false);
 
   const dateBuilder = (details) => {
     const months = [
@@ -53,7 +55,9 @@ const App = () => {
     fetch(`${api.base}weather?q=${searchValue}&units=metric&APPID=${api.key}`)
       .then((data) => data.json())
       .then((res) => {
-        console.log(res);
+        console.log(isFetchingWeather, "before");
+        setIsFetchingWeather(true);
+        console.log(isFetchingWeather, "after");
         setLocation(res.name);
         setTemp(res.main.temp.toFixed());
         setWeather(res.weather[0].main);
@@ -61,6 +65,7 @@ const App = () => {
         setHumidity(res.main.humidity);
         setLongitude(res.coord.lon.toFixed(2));
         setLatitude(res.coord.lat.toFixed(2));
+        setIsFetchingWeather(false);
       })
       .catch((err) => {
         console.log(err);
@@ -71,12 +76,15 @@ const App = () => {
     fetch(`${api.base}weather?q=abuja&units=metric&APPID=${api.key}`)
       .then((data) => data.json())
       .then((res) => {
+        setIsFetchingWeather(true);
         setLocation(res.name);
         setTemp(res.main.temp.toFixed());
         setWeather(res.weather[0].main);
+        setIcon(res.weather[0].icon);
         setHumidity(res.main.humidity);
         setLongitude(res.coord.lon.toFixed(2));
         setLatitude(res.coord.lat.toFixed(2));
+        setIsFetchingWeather(false);
       })
       .catch((err) => {
         console.log(err);
@@ -131,6 +139,7 @@ const App = () => {
               {dateBuilder(new Date())}
             </h3>
           </div>
+          {isFetchingWeather === true ? <Spinner /> : null}
         </div>
 
         <div className="mainContainer__btm">
