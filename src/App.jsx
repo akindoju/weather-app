@@ -108,14 +108,46 @@ const App = () => {
     console.log({ weather });
     if (weather.includes("Rain")) {
       setIsRain(true);
+      setIsClouds(false);
+      setIsClear(false);
+    } else if (weather.includes("Cloud")) {
+      setIsRain(false);
+      setIsClouds(true);
+      setIsClear(false);
+    } else if (weather.includes("Clear")) {
+      setIsRain(false);
+      setIsClouds(false);
+      setIsClear(true);
     } else {
       setIsRain(false);
+      setIsClouds(false);
+      setIsClear(false);
     }
   }, [weather]);
 
   return (
-    <div className={isRain ? "app isRain" : "app"}>
-      <div className={isRain ? "mainContainer isRain" : "mainContainer"}>
+    <div
+      className={
+        isRain
+          ? "app isRain"
+          : isClouds
+          ? "app isCloudsBG"
+          : isClear
+          ? "app isClear"
+          : "app"
+      }
+    >
+      <div
+        className={
+          isRain
+            ? "mainContainer isRain"
+            : isClouds
+            ? "mainContainer isClouds"
+            : isClear
+            ? "mainContainer isClear"
+            : "mainContainer"
+        }
+      >
         <div className="mainContainer__top">
           <form
             onSubmit={(event) => {

@@ -15,25 +15,7 @@ html {
   // }
 }
 
-// ::-webkit-scrollbar {
-//   width: 0.8rem;
-// }
-// ::-webkit-scrollbar-track {
-//   background: blue;
-// }
-// ::-webkit-scrollbar-thumb {
-//   background-color: blue;
-// }
-// ::-webkit-scrollbar-thumb:hover {
-//   background-color: #ffdf99;
-// }
-
 .app {
-  content: "";
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: -1;
   background-image: linear-gradient(
       to bottom,
       rgba(#ffd35d, 0.7),
@@ -42,12 +24,6 @@ html {
     url("https://images.unsplash.com/photo-1584267385494-9fdd9a71ad75?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80");
   height: 100vh;
   background-size: cover;
-
-  // -webkit-filter: blur(5px);
-  // -moz-filter: blur(5px);
-  // -o-filter: blur(5px);
-  // -ms-filter: blur(5px);
-  // filter: blur(5px);
 }
 
 .mainContainer {
@@ -215,16 +191,20 @@ html {
   background-size: cover;
 }
 
-.isRain .mainContainer__top--details-location {
+.isRain .mainContainer__top--details-location,
+.isClouds .mainContainer__top--details-location {
   color: black;
 }
 
 .isRain .mainContainer__top--details-time,
-.isRain .mainContainer__top--details-date {
+.isRain .mainContainer__top--details-date,
+.isClouds .mainContainer__top--details-time,
+.isClouds .mainContainer__top--details-date {
   color: rgb(63, 63, 63);
 }
 
-.isRain .mainContainer__top--search {
+.isRain .mainContainer__top--search,
+.isClouds .mainContainer__top--search {
   input {
     border: 1px solid rgb(138, 138, 138);
     color: black;
@@ -240,9 +220,32 @@ html {
   }
 }
 
-//weather spinner Component styles
+.isRain .mainContainer {
+  border: 1px solid black;
+}
 
-// @import "compass/css3";
+.isClear {
+  background-image: url("https://images.unsplash.com/photo-1523793740499-83d43b75a2b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80");
+  background-size: cover;
+}
+
+.isClouds {
+  background-image: url("https://images.unsplash.com/photo-1469365556835-3da3db4c253b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80");
+  background-size: cover;
+}
+
+.isCloudsBG {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(#dbdddb, 0.8),
+      rgba(#abbcc0, 0.8)
+    ),
+    url("https://images.unsplash.com/photo-1584267385494-9fdd9a71ad75?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80");
+  height: 100vh;
+  background-size: cover;
+}
+
+//weather spinner Component styles
 
 .preloader {
   position: absolute;
