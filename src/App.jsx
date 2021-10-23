@@ -17,6 +17,9 @@ const App = () => {
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
   const [isFetchingWeather, setIsFetchingWeather] = useState(true);
+  const [isClouds, setIsClouds] = useState(false);
+  const [isClear, setIsClear] = useState(false);
+  const [isRain, setIsRain] = useState(false);
 
   const dateBuilder = (details) => {
     const months = [
@@ -60,9 +63,18 @@ const App = () => {
         `${api.base}weather?q=${searchValue}&units=metric&APPID=${api.key}`
       );
       const data = await response.json();
+      console.log(data);
       setLocation(data.name);
       setTemp(data.main.temp.toFixed());
-      setWeather(data.weather[0].main);
+      setWeather(
+        data.weather[0].description
+          .split(" ")
+          .map((item) => {
+            return item.charAt(0).toUpperCase() + item.slice(1);
+          })
+          .join(" ") // making first letter of word(s) capital
+      );
+      console.log(weather);
       setIcon(data.weather[0].icon);
       setHumidity(data.main.humidity);
       setLongitude(data.coord.lon.toFixed(2));
@@ -92,9 +104,18 @@ const App = () => {
       });
   }, []);
 
+  useEffect(() => {
+    console.log({ weather });
+    if (weather.includes("Rain")) {
+      setIsRain(true);
+    } else {
+      setIsRain(false);
+    }
+  }, [weather]);
+
   return (
-    <div className="app">
-      <div className="mainContainer">
+    <div className={isRain ? "app isRain" : "app"}>
+      <div className={isRain ? "mainContainer isRain" : "mainContainer"}>
         <div className="mainContainer__top">
           <form
             onSubmit={(event) => {
@@ -146,17 +167,6 @@ const App = () => {
         <div className="mainContainer__btm">
           <div className="mainContainer__btm--temp">{temp}°C</div>
           <div className="mainContainer__btm--weather">
-            {/* <svg
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-            >
-              <title>Sunny</title>
-              <path d="M16 9c-3.859 0-7 3.141-7 7s3.141 7 7 7 7-3.141 7-7c0-3.859-3.141-7-7-7zM16 7c0.552 0 1-0.447 1-1v-2c0-0.552-0.448-1-1-1-0.553 0-1 0.448-1 1v2c0 0.553 0.447 1 1 1zM16 25c-0.553 0-1 0.448-1 1v2c0 0.553 0.447 1 1 1 0.552 0 1-0.447 1-1v-2c0-0.552-0.448-1-1-1zM23.776 9.635l1.414-1.414c0.391-0.391 0.391-1.023 0-1.414s-1.023-0.391-1.414 0l-1.414 1.414c-0.391 0.391-0.391 1.023 0 1.414s1.023 0.391 1.414 0zM8.221 22.366l-1.414 1.414c-0.391 0.391-0.391 1.023 0 1.414s1.023 0.391 1.414 0l1.414-1.414c0.391-0.393 0.391-1.023 0-1.414s-1.023-0.393-1.414 0zM7 16c0-0.552-0.448-1-1-1h-2c-0.553 0-1 0.448-1 1 0 0.553 0.447 1 1 1h2c0.552 0 1-0.447 1-1zM28 15h-2c-0.553 0-1 0.448-1 1 0 0.553 0.447 1 1 1h2c0.552 0 1-0.447 1-1 0-0.552-0.448-1-1-1zM8.22 9.635c0.391 0.391 1.023 0.391 1.414 0s0.391-1.023 0-1.414l-1.414-1.414c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.023 0 1.414l1.414 1.414zM23.779 22.363c-0.393-0.391-1.023-0.391-1.414 0s-0.393 1.023 0 1.414l1.414 1.414c0.391 0.391 1.023 0.391 1.414 0s0.391-1.023 0-1.414l-1.414-1.414z"></path>
-            </svg> */}
-
             <img
               src={`https://openweathermap.org/img/w/${icon}.png`}
               alt={icon}
