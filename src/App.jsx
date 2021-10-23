@@ -16,7 +16,7 @@ const App = () => {
   const [humidity, setHumidity] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
-  const [isFetchingWeather, setIsFetchingWeather] = useState(false);
+  const [isFetchingWeather, setIsFetchingWeather] = useState(true);
 
   const dateBuilder = (details) => {
     const months = [
@@ -41,6 +41,7 @@ const App = () => {
       "Wednesday",
       "Thursday",
       "Friday",
+      "Saturday",
     ];
 
     let day = days[details.getDay()];
@@ -52,31 +53,31 @@ const App = () => {
   };
 
   const findWeather = async () => {
-    fetch(`${api.base}weather?q=${searchValue}&units=metric&APPID=${api.key}`)
-      .then((data) => data.json())
-      .then((res) => {
-        console.log(isFetchingWeather, "before");
-        setIsFetchingWeather(true);
-        console.log(isFetchingWeather, "after");
-        setLocation(res.name);
-        setTemp(res.main.temp.toFixed());
-        setWeather(res.weather[0].main);
-        setIcon(res.weather[0].icon);
-        setHumidity(res.main.humidity);
-        setLongitude(res.coord.lon.toFixed(2));
-        setLatitude(res.coord.lat.toFixed(2));
-        setIsFetchingWeather(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setIsFetchingWeather(true);
+
+    try {
+      const response = await fetch(
+        `${api.base}weather?q=${searchValue}&units=metric&APPID=${api.key}`
+      );
+      const data = await response.json();
+      setLocation(data.name);
+      setTemp(data.main.temp.toFixed());
+      setWeather(data.weather[0].main);
+      setIcon(data.weather[0].icon);
+      setHumidity(data.main.humidity);
+      setLongitude(data.coord.lon.toFixed(2));
+      setLatitude(data.coord.lat.toFixed(2));
+      setIsFetchingWeather(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
+    setIsFetchingWeather(true);
     fetch(`${api.base}weather?q=abuja&units=metric&APPID=${api.key}`)
       .then((data) => data.json())
       .then((res) => {
-        setIsFetchingWeather(true);
         setLocation(res.name);
         setTemp(res.main.temp.toFixed());
         setWeather(res.weather[0].main);
@@ -139,7 +140,7 @@ const App = () => {
               {dateBuilder(new Date())}
             </h3>
           </div>
-          {isFetchingWeather === true ? <Spinner /> : null}
+          {isFetchingWeather ? <Spinner /> : null}
         </div>
 
         <div className="mainContainer__btm">
