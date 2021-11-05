@@ -8,24 +8,23 @@ const api = {
 };
 
 const App = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const [location, setLocation] = useState("");
+  const [hour, setHour] = useState("");
   const [temp, setTemp] = useState("");
-  const [weather, setWeather] = useState("");
   const [icon, setIcon] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [weather, setWeather] = useState("");
+  const [isRain, setIsRain] = useState(false);
+  const [isClear, setIsClear] = useState(false);
+  const [isClouds, setIsClouds] = useState(false);
+  const [location, setLocation] = useState("");
   const [humidity, setHumidity] = useState("");
-  const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
   const [timezone, setTimezone] = useState("");
-  // const [time, setTime] = useState("");
-  const [minutes, setMinutes] = useState("");
-  const [hour, setHour] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [isFetchingWeather, setIsFetchingWeather] = useState(true);
-  const [isClouds, setIsClouds] = useState(false);
-  const [isClear, setIsClear] = useState(false);
-  const [isRain, setIsRain] = useState(false);
 
-  const dateBuilder = (details) => {
+  const dateBuilder = () => {
     const months = [
       "January",
       "February",
@@ -51,10 +50,14 @@ const App = () => {
       "Saturday",
     ];
 
-    let day = days[details.getDay()];
-    let date = details.getDate();
-    let month = months[details.getMonth()];
-    let year = details.getFullYear();
+    const locationCurrentTime = new Date(
+      new Date().getTime() - -timezone * 1000
+    );
+
+    let day = days[locationCurrentTime.getDay()];
+    let date = locationCurrentTime.getDay();
+    let month = months[locationCurrentTime.getMonth()];
+    let year = locationCurrentTime.getFullYear();
 
     return `${day} ${date} ${month}, ${year}`;
   };
@@ -67,7 +70,6 @@ const App = () => {
         `${api.base}weather?q=${searchValue}&units=metric&APPID=${api.key}`
       );
       const data = await response.json();
-      console.log(data);
       setLocation(data.name);
       setTemp(data.main.temp.toFixed());
       setWeather(
@@ -110,7 +112,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    // console.log({ weather });
     if (weather.includes("Rain")) {
       setIsRain(true);
       setIsClouds(false);
@@ -131,10 +132,6 @@ const App = () => {
   }, [weather]);
 
   useEffect(() => {
-    // const locationCurrentTime =
-    // new Date(
-    //   new Date().getTime() - -{ timezone } * 1000
-    // );
     const locationCurrentTime = new Date(
       new Date().getTime() - -timezone * 1000
     );
@@ -204,10 +201,10 @@ const App = () => {
             <h1 className="mainContainer__top--details-location">{location}</h1>
             <h2 className="mainContainer__top--details-time">
               {/* Setting time based on 12hrs cycle */}
-              {hour > 12 ? hour - 12 : hour}:{minutes}
+              {hour > 12 ? hour - 12 : hour}:
+              {minutes < 10 ? "0" + { minutes } : minutes}
               {hour > 12 ? "pm" : "am"}
             </h2>
-            {/* <h2 className="mainContainer__top--details-time">{time}</h2> */}
             <h3 className="mainContainer__top--details-date">
               {dateBuilder(new Date())}
             </h3>
