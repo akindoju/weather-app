@@ -16,6 +16,10 @@ const App = () => {
   const [humidity, setHumidity] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
+  const [timezone, setTimezone] = useState("");
+  // const [time, setTime] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [hour, setHour] = useState("");
   const [isFetchingWeather, setIsFetchingWeather] = useState(true);
   const [isClouds, setIsClouds] = useState(false);
   const [isClear, setIsClear] = useState(false);
@@ -74,11 +78,11 @@ const App = () => {
           })
           .join(" ") // making first letter of word(s) capital
       );
-      console.log(weather);
       setIcon(data.weather[0].icon);
       setHumidity(data.main.humidity);
       setLongitude(data.coord.lon.toFixed(2));
       setLatitude(data.coord.lat.toFixed(2));
+      setTimezone(data.timezone);
       setIsFetchingWeather(false);
     } catch (error) {
       console.log(error);
@@ -97,6 +101,7 @@ const App = () => {
         setHumidity(res.main.humidity);
         setLongitude(res.coord.lon.toFixed(2));
         setLatitude(res.coord.lat.toFixed(2));
+        setTimezone(res.timezone);
         setIsFetchingWeather(false);
       })
       .catch((err) => {
@@ -105,7 +110,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log({ weather });
+    // console.log({ weather });
     if (weather.includes("Rain")) {
       setIsRain(true);
       setIsClouds(false);
@@ -124,6 +129,19 @@ const App = () => {
       setIsClear(false);
     }
   }, [weather]);
+
+  useEffect(() => {
+    // const locationCurrentTime =
+    // new Date(
+    //   new Date().getTime() - -{ timezone } * 1000
+    // );
+    const locationCurrentTime = new Date(
+      new Date().getTime() - -timezone * 1000
+    );
+    setHour(locationCurrentTime.getHours() - 1);
+    setMinutes(locationCurrentTime.getMinutes());
+    console.log(locationCurrentTime, "the time");
+  }, [timezone]);
 
   return (
     <div
@@ -172,7 +190,9 @@ const App = () => {
                 width="32"
                 height="32"
                 viewBox="0 0 32 32"
-                onClick={() => findWeather()}
+                onClick={() => {
+                  findWeather();
+                }}
               >
                 <title>search</title>
                 <path d="M31.008 27.231l-7.58-6.447c-0.784-0.705-1.622-1.029-2.299-0.998 1.789-2.096 2.87-4.815 2.87-7.787 0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c2.972 0 5.691-1.081 7.787-2.87-0.031 0.677 0.293 1.515 0.998 2.299l6.447 7.58c1.104 1.226 2.907 1.33 4.007 0.23s0.997-2.903-0.23-4.007zM12 20c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"></path>
@@ -183,12 +203,11 @@ const App = () => {
           <div className="mainContainer__top--details">
             <h1 className="mainContainer__top--details-location">{location}</h1>
             <h2 className="mainContainer__top--details-time">
-              {new Date().getHours() > 12
-                ? new Date().getHours() - 12
-                : new Date().getHours()}
-              :{new Date().getMinutes()}
-              {new Date().getHours() > 12 ? "pm" : "am"}
+              {/* Setting time based on 12hrs cycle */}
+              {hour > 12 ? hour - 12 : hour}:{minutes}
+              {hour > 12 ? "pm" : "am"}
             </h2>
+            {/* <h2 className="mainContainer__top--details-time">{time}</h2> */}
             <h3 className="mainContainer__top--details-date">
               {dateBuilder(new Date())}
             </h3>
