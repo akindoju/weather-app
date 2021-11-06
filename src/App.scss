@@ -10,9 +10,10 @@
 html {
   box-sizing: border-box;
   font-size: 62.5%; //10px/16px(browser default) = 62.5%
-  // @media only screen and (max-width: 1000px) {
-  //   font-size: 50%;
-  // }
+
+  @media only screen and (max-width: 1000px) {
+    font-size: 50%;
+  }
 }
 
 .app {
@@ -42,6 +43,14 @@ html {
   border-radius: 1rem;
   border: 1px solid white;
 
+  @media only screen and (max-width: 800px) {
+    width: 80vw;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 90vw;
+  }
+
   &__top {
     display: flex;
     align-items: center;
@@ -49,6 +58,11 @@ html {
     height: 30%;
     width: 100%;
     padding: 5rem;
+
+    @media only screen and (max-width: 700px) {
+      flex-direction: column;
+      height: 45%;
+    }
 
     &--search {
       display: flex;
@@ -138,6 +152,10 @@ html {
     height: 30%;
     width: 100%;
 
+    @media only screen and (max-width: 500px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
     & > * {
       display: flex;
       flex-direction: column;
@@ -162,11 +180,8 @@ html {
         color: rgb(209, 209, 209);
         font-family: "Sora", sans-serif;
         font-size: 1.8rem;
+        text-align: center;
       }
-    }
-
-    &--wind {
-      border: none;
     }
 
     &--info {
@@ -181,6 +196,19 @@ html {
         font-family: "Sora", sans-serif;
         color: rgb(209, 209, 209);
         font-size: 2rem;
+      }
+    }
+
+    &--longitude,
+    &--latitude {
+      @media only screen and (max-width: 500px) {
+        display: none;
+      }
+    }
+
+    &--humidity {
+      @media only screen and (max-width: 500px) {
+        border-right: none;
       }
     }
   }

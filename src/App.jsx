@@ -225,11 +225,11 @@ const App = () => {
             <h2>Humidity</h2>
             <h1>{humidity}%</h1>
           </div>
-          <div className="mainContainer__btm--info mainContainer__btm--precipitation">
+          <div className="mainContainer__btm--info mainContainer__btm--longitude">
             <h2>Longitude</h2>
             <h1>{longitude}°E</h1>
           </div>
-          <div className="mainContainer__btm--info mainContainer__btm--wind">
+          <div className="mainContainer__btm--info mainContainer__btm--latitude">
             <h2>Latitude</h2>
             <h1>{latitude}°N</h1>
           </div>
