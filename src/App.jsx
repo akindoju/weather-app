@@ -55,7 +55,7 @@ const App = () => {
     );
 
     let day = days[locationCurrentTime.getDay()];
-    let date = locationCurrentTime.getDay();
+    let date = locationCurrentTime.getDate();
     let month = months[locationCurrentTime.getMonth()];
     let year = locationCurrentTime.getFullYear();
 
@@ -137,7 +137,6 @@ const App = () => {
     );
     setHour(locationCurrentTime.getHours() - 1);
     setMinutes(locationCurrentTime.getMinutes());
-    console.log(locationCurrentTime, "the time");
   }, [timezone]);
 
   return (
