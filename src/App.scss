@@ -51,7 +51,7 @@ html {
     width: 90vw;
   }
 
-  @media only screen and (max-width: 350px) {
+  @media only screen and (max-width: 400px) {
     width: 100vw;
     height: 100vh;
     border: none;
@@ -167,7 +167,7 @@ html {
       grid-template-columns: repeat(3, 1fr);
     }
 
-    @media only screen and (max-width: 350px) {
+    @media only screen and (max-width: 400px) {
       border-radius: 0px;
     }
 
